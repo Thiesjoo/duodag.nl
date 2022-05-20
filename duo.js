@@ -1,5 +1,6 @@
 const rijksoverheidYoink =
-  `24 januari
+  `
+24 januari
 24 februari
 24 maart
 22 april
@@ -10,10 +11,9 @@ const rijksoverheidYoink =
 23 september
 24 oktober
 24 november
-22 december`
-const data = rijksoverheidYoink.split("\n").map(x => +x.split(" ")[0])
+22 december`.split("\n")
+const data = rijksoverheidYoink.map(x => +x.split(" ")[0])
 
-data.unshift(0) // 0 based indexing
 
 function getDaysInMonth(month) {
   return new Date(new Date().getFullYear(), month, 0).getDate()
@@ -41,10 +41,11 @@ function duoDag() {
   if (currentDay > duoDag) {
     duoDag = data[(currentMonth + 1) % 12]
     duration = duoDag + (getDaysInMonth(currentMonth) - currentDay);
+    currentMonth = (currentMonth + 1) % 12
   } else {
     duration = duoDag - currentDay
   }
 
-  elem.innerText = `DUO geld komt over ${duration} dagen!`
+  elem.innerText = `DUO geld komt over ${duration} dagen! (${rijksoverheidYoink[currentMonth]})`
 }
 duoDag()
