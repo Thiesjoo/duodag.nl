@@ -1,22 +1,13 @@
-const data = ["januari",
-  "februari",
-  "maart",
-  "april",
-  "mei",
-  "juni",
-  "juli",
-  "augustus",
-  "september",
-  "oktober",
-  "november",
-  "december"
-]
-
 const SUNDAY = 0
 const SATURDAY = 6
 
+function getDateFor(month, day) {
+  return new Date(new Date().getFullYear(), month, day)
+
+}
+
 function getDaysInMonth(month) {
-  return new Date(new Date().getFullYear(), month, 0).getDate()
+  return getDateFor(month, 0).getDate()
 }
 
 /**
@@ -25,7 +16,7 @@ function getDaysInMonth(month) {
  * @returns 22 | 23 | 24
  */
 function getDuoDag(month) {
-  const weekDay = new Date(new Date().getFullYear(), month, 24).getDay()
+  const weekDay = getDateFor(month, 24).getDay()
 
   if (weekDay == SATURDAY) {
     return 23
@@ -55,11 +46,11 @@ function duoDag() {
   let duration;
   let duoDagString;
   if (currentDay > duoDag) {
-    duoDagString = `${duoDag} ${data[(currentMonth + 1) % 12]}`
+    duoDagString = `${duoDag} ${getDateFor((currentMonth + 1) % 12, 3).toLocaleString('nl-NL', { month: 'long' })}`
     // +1 because, we have to include the end day
     duration = duoDag + 1 + (getDaysInMonth(currentMonth) - currentDay);
   } else {
-    duoDagString = `${duoDag} ${data[currentMonth]}`
+    duoDagString = `${duoDag} ${d.toLocaleString('nl-NL', { month: 'long' })}`
     duration = duoDag - currentDay
   }
 
