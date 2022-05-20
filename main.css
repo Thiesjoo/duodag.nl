@@ -1,0 +1,38 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+}
+
+body {
+	background-color: #b5dda4;
+}
+
+h1 {
+	color: #9b5094;
+	text-align: center;
+	font-size: 4em;
+}
+p {
+	color: #874580;
+	text-align: center;
+	font-size: 2em;
+}
+
+footer {
+	text-align: center;
+	background-color: #83a0a0;
+	color: white;
+	position: absolute;
+	bottom: 0;
+	width: 100vw;
+}
+
+.small-margin {
+	margin-bottom: 0.3em;
+}
+
+a {
+	color: #eee;
+	text-decoration: 1px underline dotted;
+}
