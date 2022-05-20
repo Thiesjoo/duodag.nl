@@ -63,7 +63,8 @@ function duoDag() {
     duration = duoDag - currentDay
   }
 
-  elem.innerText = `DUO geld komt over ${duration} dagen! (${duoDagString})`
+  elem.innerText = `DUO geld komt over ${duration} dag${duration > 1 ? 'en' : ""
+    }! (${duoDagString})`
 }
 
 duoDag()
