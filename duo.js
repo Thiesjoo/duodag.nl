@@ -1,35 +1,35 @@
-const data = [ "januari",
-                "februari",
-                "maart",
-                "april",
-                "mei",
-                "juni",
-                "juli",
-                "augustus",
-                "september",
-                "oktober",
-                "november",
-                "december"
+const data = ["januari",
+  "februari",
+  "maart",
+  "april",
+  "mei",
+  "juni",
+  "juli",
+  "augustus",
+  "september",
+  "oktober",
+  "november",
+  "december"
 ]
 
-
+const SUNDAY = 0
+const SATURDAY = 6
 
 function getDaysInMonth(month) {
   return new Date(new Date().getFullYear(), month, 0).getDate()
 }
 
-function getDuoDag() {
-  const elem = document.getElementById('result')
+/**
+ * DUO doesn't deposit money in the weekends, this function grabs the overflow and
+ * returns the correct day
+ * @returns 22 | 23 | 24
+ */
+function getDuoDag(month) {
+  const weekDay = new Date(new Date().getFullYear(), month, 24).getDay()
 
-  const d = new Date()
-  const month = d.getMonth()
-  const year = d.getFullYear()
-
-  var duo = new Date(year, month, 24)
-
-  if (duo.getDay() == 6) {
+  if (weekDay == SATURDAY) {
     return 23
-  } else if (duo.getDay() == 0) {
+  } else if (weekDay == SUNDAY) {
     return 22
   } else {
     return 24
@@ -41,11 +41,10 @@ function duoDag() {
 
   const d = new Date()
   const currentDay = d.getDate()
-
   // Zero based indexing
-  var currentMonth = d.getMonth()
+  const currentMonth = d.getMonth()
 
-  let duoDag = getDuoDag()
+  let duoDag = getDuoDag(currentMonth)
 
   if (currentDay == duoDag) {
     confetti.start()
@@ -54,15 +53,17 @@ function duoDag() {
   }
 
   let duration;
+  let duoDagString;
   if (currentDay > duoDag) {
-    duoDag = getDuoDag() + ` ` + data[(currentMonth + 1) % 12]
-    duration = getDuoDag() + 1 + (getDaysInMonth(currentMonth) - currentDay);
+    duoDagString = `${duoDag} ${data[(currentMonth + 1) % 12]}`
+    // +1 because, we have to include the end day
+    duration = duoDag + 1 + (getDaysInMonth(currentMonth) - currentDay);
   } else {
-    duoDag = getDuoDag() + ` ` + data[(currentMonth) % 12]
-    duration = getDuoDag() - currentDay
+    duoDagString = `${duoDag} ${data[currentMonth]}`
+    duration = duoDag - currentDay
   }
 
-  elem.innerText = `DUO geld komt over ${duration} dagen! (${duoDag})`
+  elem.innerText = `DUO geld komt over ${duration} dagen! (${duoDagString})`
 }
 
 duoDag()
