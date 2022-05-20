@@ -1,35 +1,51 @@
-const rijksoverheidYoink =
-  `
-24 januari
-24 februari
-24 maart
-22 april
-24 mei
-24 juni
-22 juli
-24 augustus
-23 september
-24 oktober
-24 november
-22 december`.split("\n")
-const data = rijksoverheidYoink.map(x => +x.split(" ")[0])
+const data = [ "januari",
+                "februari",
+                "maart",
+                "april",
+                "mei",
+                "juni",
+                "juli",
+                "augustus",
+                "september",
+                "oktober",
+                "november",
+                "december"
+]
+
 
 
 function getDaysInMonth(month) {
   return new Date(new Date().getFullYear(), month, 0).getDate()
 }
 
-function duoDag() {
+function getDuoDag() {
   const elem = document.getElementById('result')
 
+  const d = new Date()
+  const month = d.getMonth()
+  const year = d.getFullYear()
+
+  var duo = new Date(year, month, 24)
+
+  if (duo.getDay() == 6) {
+    return 23
+  } else if (duo.getDay() == 0) {
+    return 22
+  } else {
+    return 24
+  }
+}
+
+function duoDag() {
+  const elem = document.getElementById('result')
 
   const d = new Date()
   const currentDay = d.getDate()
 
   // Zero based indexing
-  const currentMonth = d.getMonth() + 1
+  var currentMonth = d.getMonth()
 
-  let duoDag = data[currentMonth]
+  let duoDag = getDuoDag()
 
   if (currentDay == duoDag) {
     confetti.start()
@@ -39,13 +55,14 @@ function duoDag() {
 
   let duration;
   if (currentDay > duoDag) {
-    duoDag = data[(currentMonth + 1) % 12]
-    duration = duoDag + (getDaysInMonth(currentMonth) - currentDay);
-    currentMonth = (currentMonth + 1) % 12
+    duoDag = getDuoDag() + ` ` + data[(currentMonth + 1) % 12]
+    duration = getDuoDag() + 1 + (getDaysInMonth(currentMonth) - currentDay);
   } else {
-    duration = duoDag - currentDay
+    duoDag = getDuoDag() + ` ` + data[(currentMonth) % 12]
+    duration = getDuoDag() - currentDay
   }
 
-  elem.innerText = `DUO geld komt over ${duration} dagen! (${rijksoverheidYoink[currentMonth]})`
+  elem.innerText = `DUO geld komt over ${duration} dagen! (${duoDag})`
 }
+
 duoDag()
