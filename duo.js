@@ -1,8 +1,16 @@
 const SUNDAY = 0
 const SATURDAY = 6
+const DATE_FORMATTING = {
+  weekday: 'long',
+  month: 'long',
+}
+
+const NOW = new Date()
+// const NOW = new Date(2022, 9, 25)
+console.log("We are currently living in the time:", NOW)
 
 function getDateFor(month, day) {
-  return new Date(new Date().getFullYear(), month, day)
+  return new Date(NOW.getFullYear(), month, day, 4, 20)
 
 }
 
@@ -30,12 +38,13 @@ function getDuoDag(month) {
 function duoDag() {
   const elem = document.getElementById('result')
 
-  const d = new Date()
-  const currentDay = d.getDate()
-  // Zero based indexing
-  const currentMonth = d.getMonth()
+  const currentDate = NOW
+  const currentDay = currentDate.getDate()
+  // This current month has 0 for january and 11 for december, beacuse JS is ✨special✨
+  const currentMonth = currentDate.getMonth()
 
-  let duoDag = getDuoDag(currentMonth)
+  // The day of duodag in this current month, so 22, 23 or 24
+  const duoDag = getDuoDag(currentMonth)
 
   if (currentDay == duoDag) {
     confetti.start()
@@ -43,19 +52,19 @@ function duoDag() {
     return
   }
 
-  let duration;
-  let duoDagString;
+  let duration = duoDag - currentDay
+  let duoDagDate = getDateFor(currentMonth, duoDag)
+
+  // Overflow for next month
   if (currentDay > duoDag) {
-    duoDagString = `${duoDag} ${getDateFor((currentMonth + 1) % 12, 3).toLocaleString('nl-NL', { month: 'long' })}`
+    duoDagDate = getDateFor((currentMonth + 1) % 12, duoDag)
     // +1 because, we have to include the end day
-    duration = duoDag + 1 + (getDaysInMonth(currentMonth) - currentDay);
-  } else {
-    duoDagString = `${duoDag} ${d.toLocaleString('nl-NL', { month: 'long' })}`
-    duration = duoDag - currentDay
+    duration += 1 + getDaysInMonth(currentMonth);
   }
 
-  elem.innerText = `DUO geld komt over ${duration} dag${duration > 1 ? 'en' : ""
-    }! (${duoDagString})`
+  const [month, _, weekday] = new Intl.DateTimeFormat("nl-NL", DATE_FORMATTING).formatToParts(duoDagDate)
+  duoDagString = `${weekday.value} ${duoDag} ${month.value}`
+  elem.innerText = `DUO geld komt over ${duration} dag${duration > 1 ? 'en' : ""}! (${duoDagString})`
 }
 
 duoDag()
