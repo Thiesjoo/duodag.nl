@@ -15,5 +15,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the Docker image
         run: |
-              docker build . -t ghcr.io/${{github.actor}}/${{github.event.repository.name}}:latest -t ghcr.io/${{github.actor}}/${{github.event.repository.name}}:${{github.branch}}
-              docker push ghcr.io/${{github.actor}}/${{github.event.repository.name}} --all-tags
+              docker build . -t ghcr.io/thiesjoo/duodag:latest -t ghcr.io/thiesjoo/duodag:${GITHUB_REF##*/}
+              docker push ghcr.io/thiesjoo/duodag --all-tags
