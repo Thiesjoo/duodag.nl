@@ -9,4 +9,3 @@ spec:
   ports:
     - protocol: {{ .Values.service.protocol | default "TCP" }}
       port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}

@@ -2,14 +2,13 @@ replicaCount: 2
 
 image:
   repository: ghcr.io/thiesjoo/duodag
-  tag: "kubernetes"
-  pullPolicy: IfNotPresent
+  tag: "latest"
+  pullPolicy: Always 
 
 service:
   name: nginx-service
   type: ClusterIP
   port: 80
-  targetPort: 9000
 
 env:
   name: dev
