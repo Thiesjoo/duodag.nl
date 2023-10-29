@@ -13,7 +13,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build the hello-docker Docker image
+      - name: Build the Docker image
         run: |
-              docker build . -t ghcr.io/{{github.actor}}/{{github.event.repository.name}}:latest -t ghcr.io/{{github.actor}}/{{github.event.repository.name}}:{{github.branch}}
-              docker push ghcr.io/{{github.actor}}/{{github.event.repository.name}} --all-tags
+              docker build . -t ghcr.io/${{github.actor}}/${{github.event.repository.name}}:latest -t ghcr.io/${{github.actor}}/${{github.event.repository.name}}:${{github.branch}}
+              docker push ghcr.io/${{github.actor}}/${{github.event.repository.name}} --all-tags
