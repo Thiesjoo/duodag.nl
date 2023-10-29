@@ -1,8 +1,8 @@
 replicaCount: 2
 
 image:
-  repository: nginx
-  tag: "1.16.0"
+  repository: ghcr.io/thiesjoo/duodag
+  tag: "kubernetes"
   pullPolicy: IfNotPresent
 
 service:

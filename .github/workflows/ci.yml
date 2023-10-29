@@ -1,8 +1,9 @@
 name: CI/CD
 on: [push]
+
 jobs:
-  build:
-    name: Build and push Docker image
+  # Something with: buildx
+  buildx:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GIT repository
@@ -13,7 +14,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
       - name: Build the Docker image
         run: |
-              docker build . -t ghcr.io/thiesjoo/duodag:latest -t ghcr.io/thiesjoo/duodag:${GITHUB_REF##*/}
-              docker push ghcr.io/thiesjoo/duodag --all-tags
+              docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/thiesjoo/duodag:latest -t ghcr.io/thiesjoo/duodag:${GITHUB_REF##*/} --push .
