@@ -6,9 +6,5 @@ image:
   pullPolicy: Always 
 
 service:
-  name: nginx-service
   type: ClusterIP
   port: 80
-
-env:
-  name: dev
